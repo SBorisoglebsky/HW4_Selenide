@@ -5,9 +5,10 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selectors.byXpath;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 public class JUnit5Example {
 
@@ -22,10 +23,13 @@ public class JUnit5Example {
         open("/selenide/selenide");
         $("h1").shouldHave(Condition.text("selenide / selenide"));
 
-      //  $("span").find(byText("\"Wiki\"")).click();
-        $(byXpath("//span[text()='Wiki']")).click();
+        $("span[data-content='Wiki']").click();
 
-        sleep(5000);
+        $(".wiki-more-pages-link button").click();
+        $("#wiki-pages-box").shouldHave(Condition.text("SoftAssertions"));
+        $("#wiki-pages-box ").find(byText("SoftAssertions")).click();
+
+        $("#wiki-body").shouldHave(text("Using JUnit5 extend test class:"));
 
     }
 }
